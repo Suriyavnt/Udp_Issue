@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  udp-client:
+    image: suriya12198/sampletestapp:latest  # Use the image from Docker Hub or local image
+    ports:
+      - "9803:9801/udp"  # Expose UDP port
+      - "7803:9803/tcp"  # Expose TCP port
+    stdin_open: true
+    tty: true
+    restart: always

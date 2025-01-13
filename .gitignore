@@ -1,0 +1,22 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/TCPServer/bin/Debug
+/TCPServer/obj/Debug
+/TCPServer/obj/Release
+/UDPClientApp/bin/Debug/net8.0/linux-x64
+/UDPClientApp/obj/Debug/net8.0
+/UDPClientApp/obj/publish/linux-x64
+/UDPClientApp/obj/Release/net8.0/linux-x64
+/UDPClientApp/obj/Release/net8.0/linux-x64/ref/CoreClientApp.dll
+/UDPClientApp/obj/Release/net8.0/ref
+/UDPClientApp/obj/Release/net8.0/refint
+/UDPClientApp/obj/Release/net8.0/win-x64
+/UDPClientApp/obj/Release/net8.0
+/UDPClientApp/obj
+/UDPClientApp/Properties
+/UdpServer/bin/Debug
+/UdpServer/obj
+/UdpServer/Properties
+/.vs
