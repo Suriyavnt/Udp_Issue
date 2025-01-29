@@ -7,7 +7,7 @@ class TcpControlApp
 {
     static void Main()
     {
-        TcpClient tcpClient = new TcpClient("127.0.0.1", 7803);
+        TcpClient tcpClient = new TcpClient("127.0.0.1", 7802);
         NetworkStream stream = tcpClient.GetStream();
 
         while (true)

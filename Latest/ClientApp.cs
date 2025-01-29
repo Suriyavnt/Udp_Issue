@@ -1,13 +1,15 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 
-public class Program
+class UdpClientApp
 {
     static UdpClient udpClient;
     static Thread udpThread;
 
-    private static void Main(string[] args)
+    static void Main()
     {
         // Start the UDP listener
         StartUdpListener();
@@ -31,23 +33,21 @@ public class Program
             udpClient.Close();
         }
 
-        Console.WriteLine($"{DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fff")} Initialize UDP Client");
-        udpClient = new UdpClient(9801);
-        udpClient.Client.ReceiveTimeout = 500;
-        Console.WriteLine($"{DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fff")} UDP client listening on port 9801...");
-        var remoteEndPoint = new IPEndPoint(IPAddress.Any, 9801);
+        udpClient = new UdpClient(9802);
+        Console.WriteLine("UDP client listening on port 9801...");
+        var remoteEndPoint = new IPEndPoint(IPAddress.Any, 9802);
         udpThread = new Thread(() =>
         {
             while (true)
             {
                 try
                 {
-                    byte[] data = udpClient.Receive(ref remoteEndPoint);
-                    Console.WriteLine($"{DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fff")}  UDP Received: {Encoding.UTF8.GetString(data)}");
+                    byte[] data = udpClient.Receive(ref  remoteEndPoint);
+                    Console.WriteLine($"UDP Received: {Encoding.UTF8.GetString(data)}");
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"{DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fff")} Error receiving UDP data: " + ex.Message);
+                    Console.WriteLine("Error receiving UDP data: " + ex.Message);
                 }
             }
         })
@@ -62,7 +62,7 @@ public class Program
     {
         TcpListener tcpListener = new TcpListener(IPAddress.Parse("0.0.0.0"), 9803);
         tcpListener.Start();
-        Console.WriteLine($"{DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fff")} TCP client listening on port 9803...");
+        Console.WriteLine("TCP client listening on port 9803...");
 
         while (true)
         {
@@ -76,10 +76,10 @@ public class Program
                 if (bytesRead > 0)
                 {
                     string message = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-                    Console.WriteLine($"{DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fff")} TCP Received: {message}");
+                    Console.WriteLine($"TCP Received: {message}");
 
                     // Stop and restart UDP listener
-                    Console.WriteLine($"{DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fff")} Stopping UDP reception and resetting...");
+                    Console.WriteLine("Stopping UDP reception and resetting...");
                     StartUdpListener();
                 }
 
@@ -87,7 +87,7 @@ public class Program
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fff")} Error handling TCP connection: " + ex.Message);
+                Console.WriteLine("Error handling TCP connection: " + ex.Message);
             }
         }
     }
