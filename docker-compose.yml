@@ -1,11 +1,13 @@
 version: "3.8"
 
 services:
-  udp-client:
-    image: suriya12198/sampletestapp:latest  # Use the image from Docker Hub or local image
+  udp-client:    
+    build:
+      context: .
+      dockerfile: Dockerfile  # Points to the Dockerfile for the UDP client
     ports:
-      - "9802:9801/udp"  # Expose UDP port
-      - "7802:9803/tcp"  # Expose TCP port
+      - "9803:9801/udp"  # Expose the UDP port to the host
+      - "7802:9803/tcp"  # Expose the TCP port to the host (this port is used by the TCP server to communicate)
     stdin_open: true
     tty: true
     restart: always
